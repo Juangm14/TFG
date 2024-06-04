@@ -1,0 +1,34 @@
+import os
+
+# Directorio principal
+main_dir = r'C:\Users\johns\Desktop\TFG\Dataset\valid'
+
+# Extensiones de archivos de imagen comunes
+image_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff'}
+
+def count_images_in_directory(directory):
+    count = 0
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if os.path.splitext(file)[1].lower() in image_extensions:
+                count += 1
+    return count
+
+def main():
+    # Lista para almacenar los resultados
+    results = []
+
+    # Recorre las subcarpetas en el directorio principal
+    for subdir in os.listdir(main_dir):
+        subdir_path = os.path.join(main_dir, subdir)
+        if os.path.isdir(subdir_path):
+            num_images = count_images_in_directory(subdir_path)
+            results.append((subdir, num_images))
+
+    # Imprime los resultados
+    for folder, count in results:
+        if count <= 10:
+            print(f'Carpeta: {folder}, Número de imágenes: {count}')
+
+if __name__ == '__main__':
+    main()
